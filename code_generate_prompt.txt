@@ -1,0 +1,147 @@
+编写一段面向对象风格的c++代码，实现从文本文件中读取数据并根据要求生成图结构，输
+
+出该图结构，并在其上进行一系列计算操作，实时展示各操作的结果。在命令行中选择各种功能。   具体要求如下：一、程序首先让用户选择或输入文本文件的位置和文件名。也可以参数的
+
+形式，在启动程序时提供文件路径和文件名。
+
+? 程序读入文本数据，进行分析，将其转化为有向图：
+
+– 有向图的节点为文本中包含的某个单词（不区分大小写）
+
+– 两个节点A,B之间存在一条边A→B，意味着在文本中至少有一处位置A和B
+
+相邻出现（即A和B之间有且仅有1或多个空格）。
+
+– A→B的权重w=文本中A和B相邻出现的次数，w>=1。     二、展示生成的有向图。
+
+? 通过自定义的格式在CLI（命令行界面）上进行展示，要求格式清晰，
+
+易于理解。三、在生成有向图之后，用户输入任意两个英文单词word1、word2，程
+
+序从图中查询它们的“桥接词”。
+
+? word1、word2的桥接词word3：图中存在两条边word1→word3,
+
+word3→word2。
+
+? 输入的word1或word2如果不在图中出现，则输出“No word1 or
+
+word2 in the graph!”
+
+? 如果不存在桥接词，则输出“No bridge words from word1 to
+
+word2!”
+
+? 如果存在一个或多个桥接词，则输出“The bridge words from
+
+word1 to word2 are: xxx, xxx, and xxx.”   四、? 用户输入一行新文本，程序根据之前输入文件生
+
+成的图，计算该新文本中两两相邻的单词的
+
+bridge word，将bridge word插入新文本的两个
+
+单词之间，输出到屏幕上展示。
+
+– 如果两个单词无bridge word，则保持不变，不插入
+
+任何单词；
+
+– 如果两个单词之间存在多个bridge words，则随机
+
+从中选择一个插入进去形成新文本。
+
+? 例如用户输入：Seek to explore new and
+
+exciting synergies
+
+? 则输出结果为：Seek to explore strange new
+
+life and exciting synergies 五、用户输入两个单词，程序计算它们之间在图中的
+
+最短路径（路径上所有边权值之和最小），以某
+
+种突出的方式将路径标注在原图并展示在屏幕上
+
+，同时展示路径的长度（所有边权值之和）。
+
+– 例如：输入to和and，则其最短路径为
+
+to→explore→strange→new→life→and
+
+? 如果有多条最短路径，只需要展示一条即可。
+
+– 可选：计算出所有的最短路径，并以不同的突出显示
+
+方式展示出来。
+
+– 例如to和and之间还有另一条路径：
+
+to→seek→out→new→life→and。
+
+? 如果输入的两个单词“不可达”，则提示。 六、PageRank(PR)算法用来计算图中节点的重要度
+
+，一个节点的重要性取决于指向它的其他节点
+
+的重要性。被越多高质量节点引用的节点，其
+
+PR 值越高。例如：被诺贝尔奖得主引用的论文
+
+，比被普通学者引用的论文更重要。具体PR算
+
+法原理和过程自行查询。
+
+? 计算公式
+
+? 例如：d 取0.85时new的PR值为0.1771 。
+
+? 可选功能：可以为重要的单词分配更高的初始
+
+PR 值，从而提升关键词排序的准确性。改进初
+
+始 PR 值分配，方法不限合理即可（例如TF
+
+IDF）七、随机游走
+
+? 进入该功能时，程序随机的从图中选择一个节
+
+点，以此为起点沿出边进行随机遍历，记录经
+
+过的所有节点和边，直到出现第一条重复的边
+
+为止，或者进入的某个节点不存在出边为止。
+
+在遍历过程中，用户也可随时停止遍历。
+
+? 将遍历的节点输出为文本，并以文件形式写入
+
+磁盘。
+
+? 例如：
+
+– to seek out new life and new worlds to explore
+
+strange new civilizations
+
+– to explore strange new worlds to explore                                                                                           注意至少包含以下函数– main(…)：主程序入口，接收用户输入文件，生成图，并允许用户选择后续各项功能
+
+– void showDirectedGraph(type G, …)：展示有向图
+
+– String queryBridgeWords(String word1, String word2)：查询桥接词
+
+– String generateNewText(String inputText)：根据bridge word生成新
+
+文本
+
+– String calcShortestPath(String word1, String word2)：计算两个单
+
+词之间的最短路径
+
+– Double calPageRank(String word) ：计算单词的PR值(为便于批改，本次
+
+实验中d统一设定为0.85)
+
+– String randomWalk()：随机游走 
+还有一些额外要求
+? 除了main()之外，上述其他函数应尽可能保持与用户输入/系统输出的 独立性（所有输入输出均应在main函数中完成；如果采用GUI，则在 GUI框架中完成）。 
+? 不能改变函数的specification（参数列表/类型、返回值类型、函数名）； 
+    – 例外1：函数void showDirectedGraph(type G,…)的输入参数G的类型type， 由开发者自行定义；可根据需要增加其他参数。 – 例外2：函数main(String[] args)的输入参数个数与具体含义由开发者自定 义。
